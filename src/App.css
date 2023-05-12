@@ -2,6 +2,7 @@
 
 @layer base {
   body {
-    @apply font-poppin
+    @apply font-poppin;
+    @apply bg-bgColor;
   }
 }
