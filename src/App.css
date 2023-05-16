@@ -4,5 +4,10 @@
   body {
     @apply font-poppin;
     @apply bg-bgColor;
+    @apply text-white;
+  }
+
+  h2 {
+    @apply text-2xl;
   }
 }

@@ -1,18 +1,34 @@
+import { Fragment } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import "./App.css";
-import Footer from "./components/Footer/Footer";
-import Header from "./components/Header";
-import Navbar from "./components/Navbar/Navbar";
+import DefaultLayout from "./layouts/DefaultLayout";
+import { publicRoutes } from "./routes/routes";
+
 
 function App() {
-  return <div>
-    <Header />
-    <di className="p-12">
-      <div className="max-w-[1344px] mx-auto  ">
-        <Navbar />
-      </div>
-    </di>
-    <Footer />
-  </div>;
+  return <BrowserRouter>
+          <Routes>
+            {publicRoutes.map((route,index) => {
+              const Page = route.component;
+              let Layout = DefaultLayout
+              if(route.layout) {
+                Layout  = route.layout
+              }else if (route.layout === null) {
+                Layout = Fragment
+              }
+              return <Route 
+                        key={index} 
+                        path={route.path} 
+                        element={
+                          <Layout>
+                            <Page />
+                          </Layout>
+                        } 
+              />
+            })}
+          </Routes>
+        </BrowserRouter>  
 }
 
 export default App;

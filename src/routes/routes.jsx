@@ -1,0 +1,24 @@
+import config from '../config'
+
+import Home from '../pages/Home'
+import FilmHot from '../pages/FilmHot'
+import FilmNew from '../pages/NewFilm'
+import Movie from '../pages/Movie'
+import Search from '../pages/Search'
+import Series from '../pages/Series'
+import FAQ from '../pages/FAQ'
+import HeaderOnly from '../layouts/HeaderOnly'
+
+const publicRoutes = [
+    {path:config.routes.home, component: Home},
+    {path:config.routes.filmhot, component: FilmHot, layout: HeaderOnly},
+    {path:config.routes.filmnew, component: FilmNew},
+    {path:config.routes.movie, component: Movie},
+    {path:config.routes.series, component: Series},
+    {path:config.routes.search, component: Search, layout: HeaderOnly},
+    {path:config.routes.faq, component: FAQ, layout: HeaderOnly},
+]
+
+const privateRoutes = []
+
+export {publicRoutes, privateRoutes}
