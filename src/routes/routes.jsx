@@ -8,6 +8,8 @@ import Search from '../pages/Search'
 import Series from '../pages/Series'
 import FAQ from '../pages/FAQ'
 import HeaderOnly from '../layouts/HeaderOnly'
+import Login from '../pages/Login'
+import Signup from '../pages/Signup'
 
 const publicRoutes = [
     {path:config.routes.home, component: Home},
@@ -17,6 +19,8 @@ const publicRoutes = [
     {path:config.routes.series, component: Series},
     {path:config.routes.search, component: Search, layout: HeaderOnly},
     {path:config.routes.faq, component: FAQ, layout: HeaderOnly},
+    {path:config.routes.login, component: Login, layout: null},
+    {path:config.routes.signup, component: Signup, layout:null},
 ]
 
 const privateRoutes = []

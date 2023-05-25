@@ -6,6 +6,8 @@ const routes = {
     series:'/series', 
     search:'/search', 
     faq:'/faq',
+    login:'/login',
+    signup:'/signup',
 }
 
 export default routes

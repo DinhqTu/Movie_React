@@ -10,6 +10,9 @@ export default {
         primary: "#CF2122",
         bgColor: "#06121e",
       },
+      boxShadow: {
+        boxShadow: "0 0 0 0.225rem rgba(66, 139, 202, 0.35)",
+      },
     },
   },
   plugins: [],

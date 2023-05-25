@@ -46,7 +46,7 @@ function Header() {
                 </ul>
             </div>
             <div className="px-3 py-2">
-                <Button small>Đăng nhập</Button>
+                <Button small><Link to={config.routes.login}>Đăng nhập</Link></Button>
             </div>
         </div>
     </header>;

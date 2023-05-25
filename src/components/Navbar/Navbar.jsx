@@ -87,17 +87,18 @@ const category = [
 
 
 function Navbar() {
-    return <div className="flex flex-wrap bg-[#091C2D] rounded-sm mb-[10px]">
-        {category.map((item,index) => (
-            <div key={index} className="flex-grow p-3 text-black">
-                <label htmlFor="" className="mb-2 block font-medium text-white">{item.label} </label>
-                <select className="block w-full px-[11px] py-[7px] rounded-[4px] cursor-pointer min-w-[200px]  active:border-[#428bca] active:shadow-[0 0 0 0.125em rgba(66,139,202,.25)] outline-none transition-all" name="" id="">
-                    <option value={item.selected} defaultValue={''}>{item.selected}</option>
-                    {item.select.map((option,index) => (<option key={index} value={option.value} >{option.value}</option>))}
-                </select>
-            </div>
-        ))}
-        
+    return <div>
+        <div className="flex flex-wrap bg-[#091C2D] rounded-sm mb-[10px]">
+            {category.map((item,index) => (
+                <div key={index} className="flex-grow p-3 text-black">
+                    <label htmlFor="" className="mb-2 block font-medium text-white">{item.label} </label>
+                    <select className="block w-full px-[11px] py-[7px] rounded-[4px] cursor-pointer min-w-[200px]  active:border-[#428bca] active:shadow-[0 0 0 0.125em rgba(66,139,202,.25)] outline-none transition-all" name="" id="">
+                        <option value={item.selected} defaultValue={''}>{item.selected}</option>
+                        {item.select.map((option,index) => (<option key={index} value={option.value} >{option.value}</option>))}
+                    </select>
+                </div>
+            ))}
+        </div>
     </div>;
 }
 
