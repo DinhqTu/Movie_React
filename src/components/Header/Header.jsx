@@ -1,8 +1,9 @@
-import Button from "../Button/Button";
 import { AiOutlineSearch } from 'react-icons/ai'
 import {Link} from 'react-router-dom'
 
 import config from '../../config'
+
+import Authentication from "../Authentication/Authentication";
 
 const NavItems = [
     {
@@ -28,6 +29,7 @@ const NavItems = [
 ] 
 
 function Header() {
+
     return <header className="min-h-[3.25rem] h-14 flex flex-shrink-0 bg-bgColor">
         <div className="flex items-center flex-shrink-0 min-h-[3.25rem]">
             <Link className="px-3 py-2" to={config.routes.home} >
@@ -45,9 +47,7 @@ function Header() {
                     }
                 </ul>
             </div>
-            <div className="px-3 py-2">
-                <Button small><Link to={config.routes.login}>Đăng nhập</Link></Button>
-            </div>
+            <Authentication/>
         </div>
     </header>;
 }
