@@ -8,6 +8,7 @@ const routes = {
     faq:'/faq',
     login:'/login',
     signup:'/signup',
+    detail:'/:id'
 }
 
 export default routes

@@ -7,7 +7,7 @@ import Navbar from "../../components/Navbar/Navbar";
 function DefaultLayout({children}) {
     return <>
     <Header />
-      <div className="p-12">
+      <div className="px-12 py-20">
         <div className="max-w-[1344px] mx-auto  ">
           <Navbar />
           {children}
