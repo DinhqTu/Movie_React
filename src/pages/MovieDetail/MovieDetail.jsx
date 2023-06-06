@@ -76,14 +76,14 @@ function MovieDetail() {
       ) : (
         <div className="">
           <div
-            className="-z-10 bg-cover bg-center h-[600px] relative after:content-[' '] after:absolute after:top-0 after:bottom-0 after:left-0 after:right-0 after:bg-[#020d18bf]"
+            className="-z-10 bg-cover h-[600px] relative after:content-[' '] after:absolute after:top-0 after:bottom-0 after:left-0 after:right-0 after:bg-[#020d18bf]"
             style={{
               backgroundImage: `url("https://image.tmdb.org/t/p/original/${movie.backdrop_path}")`,
             }}
           ></div>
-          <section className="mt-[-360px] max-w-[1344px] m-auto ">
+          <section className="mt-[-320px] max-w-[1344px] m-auto ">
             <div className="flex">
-              <div className="w-1/4 pr-8 py-3 flex-none">
+              <div className="w-1/4 pr-12 py-7 flex-none">
                 <img
                   src={`https://image.tmdb.org/t/p/w342/${poster_path}`}
                   alt={original_title || movie.name}

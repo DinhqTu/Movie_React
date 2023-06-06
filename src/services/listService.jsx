@@ -28,3 +28,13 @@ export const newTVSeries = async (language) => {
   });
   return res.results;
 };
+
+export const topRated = async (language, page = '1') => {
+  const res = await request.get('movie/top_rated', {
+    params: {
+      language,
+      page,
+    },
+  });
+  return res.results;
+};
