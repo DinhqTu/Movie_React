@@ -8,37 +8,25 @@ import { Icon_Imdb, Icon_FB } from '../../components/Icons/';
 import Actor from './Components/Actor';
 import Carousel from './Components/Carousel';
 import MovieSkeleton from './Components/MovieSkeleton';
+import * as services from '../../services/movieDetailService';
 
 function MovieDetail() {
   const [movie, setMovie] = useState([]);
   const [loading, setLoading] = useState(true);
   const location = useLocation();
   const path = location.pathname;
+  const genre = path.split('/')[1];
   const id = path.split('~')[1];
-  const releaseYear = movie.release_date?.split('-')[0];
-
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyN2E4ZWI3MDhiZTEwMWNjYzE5OTk4MGZmZTdiODE1OSIsInN1YiI6IjY0NjUwYzQwNDRhNDI0MDBlNGI4NTA1MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.FRdHQVVuVfqQl6BFA1SWgbKLh5DyRzEec12zAfmUHwk',
-    },
-  };
+  const releaseYear = movie.release_date?.split('-')[0] || movie.first_air_date?.split('-')[0];
 
   useEffect(() => {
-    fetch(
-      `https://api.themoviedb.org/3/movie/${id}?append_to_response=credits&language=vi-VN`,
-      options,
-    )
-      .then((response) => response.json())
-      .then((response) => {
-        setMovie(response);
-        setLoading(false);
-      })
-      .catch((err) => console.error(err));
+    const fetchApi = async () => {
+      const data = await services.movieDetail(genre, id, 'credits', 'vi-VN');
+      setMovie(data);
+      setLoading(false);
+    };
+    fetchApi();
   }, [id]);
-
   const {
     credits,
     runtime,
@@ -96,16 +84,21 @@ function MovieDetail() {
           <section className="mt-[-360px] max-w-[1344px] m-auto ">
             <div className="flex">
               <div className="w-1/4 pr-8 py-3 flex-none">
-                <img src={`https://image.tmdb.org/t/p/w342/${poster_path}`} alt={original_title} />
+                <img
+                  src={`https://image.tmdb.org/t/p/w342/${poster_path}`}
+                  alt={original_title || movie.name}
+                />
                 <Link className="bg-[#dd003f] flex items-center justify-center text-white mt-6  px-5 py-[9px] rounded text-xl hover:bg-[#fcbcce]">
                   <FaPlay />
                   <h3 className="uppercase ml-4">Xem phim</h3>
                 </Link>
               </div>
               <div className="px-8 py-3 pt-[1.8em] shrink grow">
-                <h2 className="text-[40px] mb-7 font-Merriweather">{original_title}</h2>
+                <h2 className="text-[40px] mb-7 font-Merriweather">
+                  {original_title || movie.original_name}
+                </h2>
                 <h3 className="text-2xl mt-[-20px] mb-9">
-                  {title} <span className="text-[#428BCA]">({releaseYear})</span>
+                  {title || movie.name} <span className="text-[#428BCA]">({releaseYear})</span>
                 </h3>
                 <p className="mb-4 font-semibold">{time}</p>
                 <span className="flex items-center gap-2 font-semibold mb-4 ">
@@ -137,16 +130,16 @@ function MovieDetail() {
                 <div className="grid grid-cols-[12%_50%] gap-y-1 text-[#7a7a7a] font-semibold mb-6">
                   <p>ĐẠO DIỄN</p>
                   <p>
-                    <span key={director.id} className="text-[#DBDBDB]">
-                      {director.name}
+                    <span className="text-[#DBDBDB]">
+                      {director?.name || director?.original_name || 'Updating ...'}
                     </span>
                   </p>
                   <p>KỊCH BẢN</p>
                   <span className="text-[#DBDBDB]">{writer?.name || 'Updating ...'}</span>
                   <p>QUỐC GIA</p>
                   <p>
-                    {production_countries?.map((country) => (
-                      <span key={country.id} className="text-[#DBDBDB] mr-4">
+                    {production_countries?.map((country, index) => (
+                      <span key={index} className="text-[#DBDBDB] mr-4">
                         {country.name}
                       </span>
                     ))}
@@ -155,7 +148,9 @@ function MovieDetail() {
                   <p>
                     {
                       <span className="text-[#DBDBDB] ">
-                        {release_date ? handleReverseDate(release_date) : ''}
+                        {release_date
+                          ? handleReverseDate(release_date)
+                          : handleReverseDate(movie.first_air_date)}
                       </span>
                     }
                   </p>

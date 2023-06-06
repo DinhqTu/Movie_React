@@ -6,7 +6,6 @@ function Actor({ character, name, avatar }) {
     <div className="inline-block float-left  text-center">
       <figure className="w-[120px] h-[120px] m-[2px_auto_7.2px]">
         <Link>
-          {' '}
           <img
             className="rounded-full w-full h-full "
             src={`https://image.tmdb.org/t/p/w185${avatar}`}
