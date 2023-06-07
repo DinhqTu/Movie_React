@@ -20,7 +20,6 @@ function Search() {
     };
     fetchApi();
   }, [debounce]);
-
   return (
     <div className="p-24">
       <div className="max-w-[1344px] mx-auto  ">
@@ -36,10 +35,11 @@ function Search() {
             <>
               <MovieCard
                 key={index}
+                path={`${movie.id}`}
                 image={`https://image.tmdb.org/t/p/w342/${movie?.poster_path}`}
                 nameEn={movie?.original_title || movie?.original_name}
                 nameVi={movie?.title || movie?.name}
-                genre="movie"
+                genre={movie?.media_type || 'movie'}
               />
             </>
           ))}

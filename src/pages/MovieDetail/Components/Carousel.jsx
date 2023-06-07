@@ -1,8 +1,9 @@
+import PropTypes from 'prop-types';
 import Slider from 'react-slick';
 import { useState, useRef } from 'react';
 import { AiOutlineRight, AiOutlineLeft } from 'react-icons/ai';
 
-function Carousel({ children }) {
+function Carousel({ children, count }) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const sliderRef = useRef(null);
   const lengthElement = sliderRef.current?.props?.children
@@ -17,7 +18,7 @@ function Carousel({ children }) {
     return (
       <div>
         <AiOutlineRight
-          className={`absolute -top-1/4 right-0 text-xl cursor-pointer ${
+          className={`absolute -top-9 right-0 text-xl cursor-pointer ${
             numberNext === numberSlide ? 'text-slate-500' : 'text-slate-100'
           }`}
           onClick={onClick}
@@ -31,7 +32,7 @@ function Carousel({ children }) {
     return (
       <div>
         <AiOutlineLeft
-          className={`absolute -top-1/4 right-[30px] text-xl cursor-pointer ${
+          className={`absolute -top-9 right-[30px] text-xl cursor-pointer ${
             currentSlide === 0 ? 'text-slate-500' : ''
           }`}
           onClick={onClick}
@@ -45,8 +46,8 @@ function Carousel({ children }) {
     lazyLoad: true,
     initialSlide: 0,
     speed: 500,
-    slidesToShow: 6,
-    slidesToScroll: 6,
+    slidesToShow: count,
+    slidesToScroll: count,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     infinite: false,
@@ -55,8 +56,8 @@ function Carousel({ children }) {
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 6,
-          slidesToScroll: 6,
+          slidesToShow: count,
+          slidesToScroll: count,
         },
       },
       {
@@ -83,5 +84,11 @@ function Carousel({ children }) {
     </Slider>
   );
 }
+
+Carousel.propTypes = {
+  children: PropTypes.node.isRequired,
+  count: PropTypes.any,
+  onClick: PropTypes.func,
+};
 
 export default Carousel;

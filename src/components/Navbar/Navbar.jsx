@@ -1,105 +1,205 @@
-const category = [
-    {
-        label:'Loại phim:',
-        selected :'- Tất cả -',
-        select:[
-            {
-                value:'Phim lẻ'
-            },
-            {
-                value:'Phim bộ'
-            },
-        ]
-    },{
-        label:'Thể loại:',
-        selected :'- Tất cả -',
-        select:[
-            {
-                value:'Âm nhạc'
-            },
-            {
-                value:'Chiến tranh'
-            },{
-                value:'Hành động'
-            },{
-                value:'Khoa học viễn tưởng'
-            },
-        ]
-    },{
-        label:'Quốc gia:',
-        selected :'- Tất cả -',
-        select:[
-            {
-                value:'Việt Nam'
-            },
-            {
-                value:'Hàn Quốc'
-            },{
-                value:'Thái Lan'
-            },{
-                value:'Ấn Độ'
-            },
-        ]
-    },{
-        label:'Năm:',
-        selected :'- Tất cả -',
-        select:[
-            {
-                value:'2023'
-            },
-            {
-                value:'2022'
-            },{
-                value:'2021'
-            },{
-                value:'2020'
-            },{
-                value:'2019'
-            }
-        ]
-    },{
-        label:'Thời lượng:',
-        selected :'- Tất cả -',
-        select:[
-            {
-                value:'Dưới 30 phút'
-            },
-            {
-                value:'30 phút - 1 tiếng'
-            },{
-                value:'1 tiếng trở lên'
-            },{
-                value:'Trên 2 tiếng'
-            },
-        ]
-    },{
-        label:'Sắp xếp:',
-        selected: 'Ngày cập nhật',
-        select:[
-            {
-                value:'Ngày phát hành'
-            },{
-                value:'Điểm đánh giá'
-            }
-        ]
-    }
-]
+import NavBarItem from './NavBarItem';
 
+const category = [
+  {
+    label: 'Loại phim:',
+    selected: '- Tất cả -',
+    select: [
+      {
+        name: 'Phim lẻ',
+        value: 'movie',
+      },
+      {
+        name: 'Phim bộ',
+        value: 'tv',
+      },
+    ],
+  },
+  {
+    label: 'Thể loại:',
+    selected: '- Tất cả -',
+    select: [
+      {
+        id: 28,
+        name: 'Phim Hành Động',
+      },
+      {
+        id: 12,
+        name: 'Phim Phiêu Lưu',
+      },
+      {
+        id: 16,
+        name: 'Phim Hoạt Hình',
+      },
+      {
+        id: 35,
+        name: 'Phim Hài',
+      },
+      {
+        id: 80,
+        name: 'Phim Hình Sự',
+      },
+      {
+        id: 99,
+        name: 'Phim Tài Liệu',
+      },
+      {
+        id: 18,
+        name: 'Phim Chính Kịch',
+      },
+      {
+        id: 10751,
+        name: 'Phim Gia Đình',
+      },
+      {
+        id: 14,
+        name: 'Phim Giả Tượng',
+      },
+      {
+        id: 36,
+        name: 'Phim Lịch Sử',
+      },
+      {
+        id: 27,
+        name: 'Phim Kinh Dị',
+      },
+      {
+        id: 10402,
+        name: 'Phim Nhạc',
+      },
+      {
+        id: 9648,
+        name: 'Phim Bí Ẩn',
+      },
+      {
+        id: 10749,
+        name: 'Phim Lãng Mạn',
+      },
+      {
+        id: 878,
+        name: 'Phim Khoa Học Viễn Tưởng',
+      },
+      {
+        id: 10770,
+        name: 'Chương Trình Truyền Hình',
+      },
+      {
+        id: 53,
+        name: 'Phim Gây Cấn',
+      },
+      {
+        id: 10752,
+        name: 'Phim Chiến Tranh',
+      },
+      {
+        id: 37,
+        name: 'Phim Miền Tây',
+      },
+    ],
+  },
+  {
+    label: 'Quốc gia:',
+    selected: '- Tất cả -',
+    select: [
+      {
+        name: 'Việt Nam',
+      },
+      {
+        name: 'Hàn Quốc',
+      },
+      {
+        name: 'Thái Lan',
+      },
+      {
+        name: 'Ấn Độ',
+      },
+    ],
+  },
+  {
+    label: 'Năm:',
+    selected: '- Tất cả -',
+    select: [
+      {
+        name: '2023',
+      },
+      {
+        name: '2022',
+      },
+      {
+        name: '2021',
+      },
+      {
+        name: '2020',
+      },
+      {
+        name: '2019',
+      },
+      {
+        name: '2018',
+      },
+      {
+        name: '2017',
+      },
+      {
+        name: '2016',
+      },
+      {
+        name: '2015',
+      },
+      {
+        name: 'Trước 2015',
+      },
+    ],
+  },
+  {
+    label: 'Thời lượng:',
+    selected: '- Tất cả -',
+    select: [
+      {
+        name: 'Dưới 30 phút',
+      },
+      {
+        name: '30 phút - 1 tiếng',
+      },
+      {
+        name: '1 - 1.5 tiếng',
+      },
+      {
+        name: '1.5 - 2 tiếng ',
+      },
+      {
+        name: '2 - 3 tiếng',
+      },
+      {
+        name: '3 tiếng trở lên',
+      },
+    ],
+  },
+  {
+    label: 'Sắp xếp:',
+    selected: 'Ngày cập nhật',
+    select: [
+      {
+        name: 'Ngày phát hành',
+      },
+      {
+        name: 'Điểm đánh giá',
+      },
+    ],
+  },
+];
 
 function Navbar() {
-    return <div>
-        <div className="flex flex-wrap bg-[#091C2D] rounded-sm mb-[10px]">
-            {category.map((item,index) => (
-                <div key={index} className="flex-grow p-3 text-black">
-                    <label htmlFor="" className="mb-2 block font-medium text-white">{item.label} </label>
-                    <select className="block w-full px-[11px] py-[7px] rounded-[4px] cursor-pointer min-w-[200px]  active:border-[#428bca] active:shadow-[0 0 0 0.125em rgba(66,139,202,.25)] outline-none transition-all" name="" id="">
-                        <option value={item.selected} defaultValue={''}>{item.selected}</option>
-                        {item.select.map((option,index) => (<option key={index} value={option.value} >{option.value}</option>))}
-                    </select>
-                </div>
-            ))}
-        </div>
-    </div>;
+  // const []
+  return (
+    <div>
+      <div className="flex flex-wrap bg-[#091C2D] rounded-sm mb-[10px]">
+        {category.map((item, index) => (
+          <NavBarItem item={item} key={index} />
+        ))}
+      </div>
+    </div>
+  );
 }
 
 export default Navbar;

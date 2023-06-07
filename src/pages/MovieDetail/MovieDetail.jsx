@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-
 import { FaPlay } from 'react-icons/fa';
 import { AiOutlinePlus } from 'react-icons/ai';
 
@@ -9,10 +8,18 @@ import Actor from './Components/Actor';
 import Carousel from './Components/Carousel';
 import MovieSkeleton from './Components/MovieSkeleton';
 import * as services from '../../services/movieDetailService';
+import * as listService from '../../services/listService';
+import Trailer from './Components/Trailer';
+import YoutubePlayer from './Components/YoutubePlayer';
+import SemilarMovie from './Components/SimilarMovie';
 
 function MovieDetail() {
   const [movie, setMovie] = useState([]);
+  const [videos, setVideos] = useState([]);
+  const [videoSimilar, setVideoSimilar] = useState([]);
+  const [videoKey, setVideoKey] = useState('');
   const [loading, setLoading] = useState(true);
+  const [openTrailer, setOpenTrailer] = useState(false);
   const location = useLocation();
   const path = location.pathname;
   const genre = path.split('/')[1];
@@ -20,10 +27,16 @@ function MovieDetail() {
   const releaseYear = movie.release_date?.split('-')[0] || movie.first_air_date?.split('-')[0];
 
   useEffect(() => {
+    setLoading(true);
     const fetchApi = async () => {
       const data = await services.movieDetail(genre, id, 'credits', 'vi-VN');
+      const dataVideos = await services.movieDetail(genre, id, 'videos', 'en-US');
+      const dataSimilarMovie = await listService.similar(genre, id, 'vi-VN', '1');
+      setVideos(dataVideos.videos.results);
       setMovie(data);
+      setVideoSimilar(dataSimilarMovie);
       setLoading(false);
+      // setVideoKey(dataVideos.videos.results[0].key);
     };
     fetchApi();
   }, [id]);
@@ -58,17 +71,21 @@ function MovieDetail() {
     ? jobs.find((job) => {
         return job.job === 'Director';
       })
-    : '';
+    : null;
   const writer = credits
     ? jobs?.find((job) => {
         return job.job === 'Writer';
       })
-    : '';
+    : null;
 
   const handleReverseDate = (date) => {
     return date.split('-').reverse().join('-');
   };
 
+  const handleCloseTrailer = () => {
+    setOpenTrailer(false);
+  };
+  console.log(videoSimilar);
   return (
     <>
       {loading ? (
@@ -93,7 +110,7 @@ function MovieDetail() {
                   <h3 className="uppercase ml-4">Xem phim</h3>
                 </Link>
               </div>
-              <div className="px-8 py-3 pt-[1.8em] shrink grow">
+              <div className="px-8 py-3 pt-[1.8em] mb-8 shrink grow relative">
                 <h2 className="text-[40px] mb-7 font-Merriweather">
                   {original_title || movie.original_name}
                 </h2>
@@ -156,24 +173,51 @@ function MovieDetail() {
                   </p>
                 </div>
                 <p className="text-[#bbb8b8]">{overview}</p>
-                <h2 className="uppercase font-bold mt-8 mb-[1.2rem]">Diễn viên</h2>
+                <h3 className="uppercase font-bold mt-8 mb-[1.2rem]">Diễn viên</h3>
                 <div className="w-[994px]">
-                  <Carousel setting>
+                  <Carousel count={6}>
                     {credits?.cast?.map((cast) => (
                       <div key={cast.cast_id}>
                         <Actor
                           key={cast.cast_id}
                           character={cast.character}
                           name={cast.original_name}
-                          avatar={cast.profile_path}
+                          avatar={cast.profile_path || 'updating...'}
                         />
                       </div>
+                    ))}
+                  </Carousel>
+                </div>
+                <h3 className="uppercase font-bold mt-8 mb-[1.2rem]">Trailer</h3>
+                <div className="w-[994px]">
+                  <Carousel count={4}>
+                    {videos.map((video, index) => (
+                      <div
+                        key={index}
+                        onClick={() => {
+                          setVideoKey(video.key);
+                          setOpenTrailer(true);
+                        }}
+                      >
+                        <Trailer path={video.key} name={video.name} key={index} />
+                      </div>
+                    ))}
+                  </Carousel>
+                </div>
+                <h3 className="uppercase font-bold mt-8 mb-[1.2rem]">Phim tương tự</h3>
+                <div className="w-[994px]">
+                  <Carousel count={5}>
+                    {videoSimilar.map((item, index) => (
+                      <SemilarMovie item={item} key={index} genre={genre} />
                     ))}
                   </Carousel>
                 </div>
               </div>
             </div>
           </section>
+          {openTrailer ? (
+            <YoutubePlayer videoKey={videoKey} onChangeCloseTrailer={handleCloseTrailer} />
+          ) : null}
         </div>
       )}
     </>

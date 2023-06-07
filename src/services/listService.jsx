@@ -38,3 +38,13 @@ export const topRated = async (language, page = '1') => {
   });
   return res.results;
 };
+
+export const similar = async (genre, id, language, page = '1') => {
+  const res = await request.get(`${genre}/${id}/similar`, {
+    params: {
+      language,
+      page,
+    },
+  });
+  return res.results;
+};
