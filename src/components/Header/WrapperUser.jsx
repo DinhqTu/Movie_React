@@ -1,8 +1,9 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaUser, FaDonate } from 'react-icons/fa';
 import { FiLogOut } from 'react-icons/fi';
 import { BsCollectionPlayFill } from 'react-icons/bs';
 import { MdMessage } from 'react-icons/md';
+import { toast } from 'react-toastify';
 
 import { auth } from '../../firebase';
 import config from '../../config/';
@@ -37,10 +38,15 @@ const DropDownMenu = [
 ];
 
 function WrapperUser() {
+  const navigate = useNavigate('');
   const handleSignout = async () => {
     try {
       await auth.signOut();
       localStorage.removeItem('username');
+      navigate(config.routes.login);
+      toast.success('Đăng xuất thành công !', {
+        autoClose: 2000,
+      });
     } catch (error) {
       console.log(error.message);
     }

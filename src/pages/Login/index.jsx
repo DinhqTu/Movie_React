@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import { auth, database } from '../../firebase';
 import config from '../../config';
@@ -7,7 +8,16 @@ import config from '../../config';
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate('');
+
+  useEffect(() => {
+    const emailUser = localStorage.getItem('email');
+    const passUser = localStorage.getItem('password');
+    setRememberMe(localStorage.getItem('remember') === 'true');
+    setEmail(emailUser);
+    setPassword(passUser);
+  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -20,12 +30,30 @@ function Login() {
       // get name current user in realtime database
       const snapshot = await database.ref(`users/${user.uid}`).once('value');
       const userData = snapshot.val();
-
       localStorage.setItem('username', JSON.stringify(userData.name));
+
+      // remember user
+      if (rememberMe === true) {
+        localStorage.setItem('email', email);
+        localStorage.setItem('password', password);
+      } else {
+        localStorage.removeItem('email');
+        localStorage.removeItem('password');
+      }
       navigate('/');
+      toast.success('Đăng nhập thành công !', {
+        autoClose: 2000,
+      });
     } catch (error) {
-      console.log(error.message);
+      toast.error('Tài khoản hoặc mật khẩu không chính xác !', {
+        autoClose: 2000,
+      });
     }
+  };
+
+  const handleEventChangeCheckedBox = (e) => {
+    setRememberMe(e.target.checked);
+    localStorage.setItem('remember', e.target.checked);
   };
 
   return (
@@ -37,28 +65,35 @@ function Login() {
             <div className="p-[1.25rem] bg-[#363636] rounded mb-6">
               <form action="">
                 <input
-                  value={email}
+                  value={email || ''}
                   onChange={(e) => {
                     setEmail(e.target.value);
                   }}
                   className="input focus:input_focus"
                   type="email"
                   name="txt-email"
-                  id=""
+                  id="email"
                   placeholder="Email"
                 />
                 <input
-                  value={password}
+                  value={password || ''}
                   onChange={(e) => {
                     setPassword(e.target.value);
                   }}
                   className="input focus:input_focus"
                   type="password"
                   name="txt-password"
-                  id=""
+                  id="password"
                   placeholder="Mật khẩu"
                 />
-                <input className="mb-3" type="checkbox" name="checkbox" id="" />{' '}
+                <input
+                  className="mb-3"
+                  type="checkbox"
+                  name="checkbox"
+                  id="remember"
+                  checked={rememberMe}
+                  onChange={(e) => handleEventChangeCheckedBox(e)}
+                />
                 <span className="mb-3">Ghi nhớ</span>
                 <button
                   onClick={handleLogin}
@@ -84,7 +119,6 @@ function Login() {
               <Link to={config.routes.home} className="hover:text-[#dcf836] ml-[22px]">
                 Trang chủ
               </Link>
-              {/* <Link className="ml-[22px] hover:text-[#dcf836]">Gửi lại email xác nhận</Link> */}
             </div>
           </div>
         </div>

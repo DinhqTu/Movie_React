@@ -31,13 +31,14 @@
   }
 
   .input {
-    margin-bottom: 0.75rem;
-    display: block;
     width: 100%;
-    font-size: 1.5rem;
+    color: #7a7a7a;
+    display: block;
+    height: 60px;
     light-height: 2rem;
     padding: 1rem;
-    height: 60px;
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
     border-radius: 4px;
     outline: none;
   }

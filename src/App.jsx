@@ -3,7 +3,9 @@ import { Fragment } from 'react';
 import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import { SkeletonTheme } from 'react-loading-skeleton';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { ToastContainer, Slide, toast } from 'react-toastify';
 
+import 'react-toastify/dist/ReactToastify.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import '@fontsource/roboto/300.css';
@@ -27,6 +29,11 @@ function ScrollToTop() {
   return null;
 }
 
+// Toast config
+// toast.configure({
+//   autoClose: 2000, // Đặt thời gian tự động đóng là 2 giây (2000ms)
+// });
+
 const theme = createTheme({
   palette: {
     white: {
@@ -43,6 +50,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <SkeletonTheme baseColor="#adacac" highlightColor="#696868">
         <BrowserRouter>
+          <ToastContainer transition={Slide} />
           <ScrollToTop />
           <Routes>
             {publicRoutes.map((route, index) => {

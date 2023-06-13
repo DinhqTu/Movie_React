@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 import { auth, database } from '../../firebase';
 import config from '../../config';
@@ -14,19 +15,28 @@ function Signup() {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      // if(password === passwordConfirm) {
-      const useCredential = await auth.createUserWithEmailAndPassword(email, password);
-      const { user } = useCredential;
-      // lưu thông tin người dùng vào database
-      await database.ref(`users/${user.uid}`).set({
-        email: user.email,
-        name: name,
-      });
-      // }
-      console.log('Đăng ký thành công!');
-      navigate(config.routes.login);
+      if (password === passwordConfirm) {
+        const useCredential = await auth.createUserWithEmailAndPassword(email, password);
+        const { user } = useCredential;
+        console.log(user);
+        // lưu thông tin người dùng vào database
+        await database.ref(`users/${user.uid}`).set({
+          email: user.email,
+          name: name,
+        });
+        navigate(config.routes.login);
+        toast.success('Đăng ký tài khoản thành công !', {
+          autoClose: 2000,
+        });
+      } else {
+        toast.warning('Mật khẩu không trùng khớp !', {
+          autoClose: 2000,
+        });
+      }
     } catch (error) {
-      console.log(error.message);
+      toast.warning(error.message, {
+        autoClose: 2000,
+      });
     }
   };
 
@@ -46,7 +56,7 @@ function Signup() {
                   className="input focus:input_focus"
                   type="email"
                   name="email"
-                  id=""
+                  id="email"
                   placeholder="Email"
                 />
                 <input
@@ -55,7 +65,7 @@ function Signup() {
                   onChange={(e) => setName(e.target.value)}
                   type="text"
                   name="name"
-                  id=""
+                  id="name"
                   placeholder="Tên bạn"
                 />
                 <input
@@ -66,7 +76,7 @@ function Signup() {
                   className="input focus:input_focus"
                   type="password"
                   name="password"
-                  id=""
+                  id="pass"
                   placeholder="Mật khẩu"
                 />
                 <input
@@ -77,7 +87,7 @@ function Signup() {
                   className="input focus:input_focus"
                   type="password"
                   name="password_confirm"
-                  id=""
+                  id="re-passs"
                   placeholder="Nhập lại mật khẩu"
                 />
                 <button
