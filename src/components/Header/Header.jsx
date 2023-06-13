@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 import config from '../../config';
 
@@ -25,8 +25,8 @@ const NavItems = [
     path: config.routes.series,
   },
   {
-    item: 'Phim Mới',
-    path: config.routes.filmnew,
+    item: 'Sắp Ra Mắt',
+    path: config.routes.upcoming,
   },
   {
     item: 'FAQ',
@@ -66,9 +66,13 @@ function Header() {
             {NavItems.map((item, index) => (
               // <li key={index} className="hover:bg-[#428bca] h-full"><a className="px-3 py-2 flex items-center justify-center h-full " href="">{item.icon} {item.item}</a></li>
               <li key={index} className="hover:bg-[#428bca] h-full">
-                <Link to={item.path} className="px-3 py-2 flex items-center justify-center h-full">
+                <NavLink
+                  to={item.path}
+                  className={'px-3 py-2 flex items-center justify-center h-full'}
+                  activeclassname="active"
+                >
                   {item.icon} {item.item}
-                </Link>
+                </NavLink>
               </li>
             ))}
           </ul>

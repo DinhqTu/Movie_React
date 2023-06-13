@@ -15,9 +15,9 @@ function Home() {
       const popular = await services.popularList('vi-VN', '1');
       const newMovies = await services.newMovieList('vi-VN', 1);
       const newTVSeries = await services.newTVSeries('vi-VN');
-      setMoviesPopular(popular.slice(0, 5));
-      setMoviesNew(newMovies.slice(0, 10));
-      setTVSeries(newTVSeries.slice(0, 10));
+      setMoviesPopular(popular.results.slice(0, 5));
+      setMoviesNew(newMovies.results.slice(0, 10));
+      setTVSeries(newTVSeries.results.slice(0, 10));
       setLoading(false);
     };
     fetchApi();
@@ -27,9 +27,10 @@ function Home() {
       <h2 className="text-[#b1a21e] uppercase text-2xl font-medium mb-2 pb-[3.2px] border-b-[1px] border-b-[#1b3c5d]">
         phim đề cử
       </h2>
-      <section className="grid grid-cols-5 gap-[16px]">
-        {loading && <MovieCardSkeleton cards={5} />}
-        {!loading &&
+      <section className="grid grid-cols-5 gap-4">
+        {loading ? (
+          <MovieCardSkeleton cards={5} />
+        ) : (
           moviesPopular.map((movie, index) => (
             <MovieCard
               key={index}
@@ -39,14 +40,16 @@ function Home() {
               nameVi={movie.title}
               genre="movie"
             />
-          ))}
+          ))
+        )}
       </section>
       <h2 className="text-[#b1a21e] uppercase text-2xl font-medium mb-2 mt-8 pb-[3.2px] border-b-[1px] border-b-[#1b3c5d]">
         phim lẻ mới cập nhật
       </h2>
       <section className="grid grid-cols-5 gap-[16px]">
-        {loading && <MovieCardSkeleton cards={10} />}
-        {!loading &&
+        {loading ? (
+          <MovieCardSkeleton cards={10} />
+        ) : (
           moviesNew.map((movie, index) => (
             <MovieCard
               key={index}
@@ -56,14 +59,16 @@ function Home() {
               nameVi={movie.title}
               genre="movie"
             />
-          ))}
+          ))
+        )}
       </section>
       <h2 className="text-[#b1a21e] uppercase text-2xl font-medium mb-2 mt-8 pb-[3.2px] border-b-[1px] border-b-[#1b3c5d]">
         phim bộ mới cập nhật
       </h2>
       <section className="grid grid-cols-5 gap-[16px]">
-        {loading && <MovieCardSkeleton cards={10} />}
-        {!loading &&
+        {loading ? (
+          <MovieCardSkeleton cards={10} />
+        ) : (
           tvSeries.map((movie, index) => (
             <MovieCard
               key={index}
@@ -73,7 +78,8 @@ function Home() {
               nameVi={movie.name}
               genre="tv"
             />
-          ))}
+          ))
+        )}
       </section>
     </div>
   );

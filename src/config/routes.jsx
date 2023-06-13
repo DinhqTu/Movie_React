@@ -1,10 +1,11 @@
 const routes = {
   home: '/',
   filmhot: '/filmhot',
-  filmnew: '/filmnew',
   movie: '/movie',
+  upcoming: '/upcoming',
   series: '/series',
   search: '/search',
+  collection: '/collection',
   faq: '/faq',
   login: '/login',
   signup: '/signup',

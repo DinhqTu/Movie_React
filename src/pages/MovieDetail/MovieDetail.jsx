@@ -12,6 +12,7 @@ import * as listService from '../../services/listService';
 import Trailer from './Components/Trailer';
 import YoutubePlayer from './Components/YoutubePlayer';
 import SemilarMovie from './Components/SimilarMovie';
+import MovieShare from '../../components/MovieShare/MovieShare';
 
 function MovieDetail() {
   const [movie, setMovie] = useState([]);
@@ -25,6 +26,7 @@ function MovieDetail() {
   const genre = path.split('/')[1];
   const id = path.split('~')[1];
   const releaseYear = movie.release_date?.split('-')[0] || movie.first_air_date?.split('-')[0];
+  const movieUrl = `https://www.themoviedb.org/${genre}/${id}`;
 
   useEffect(() => {
     setLoading(true);
@@ -34,7 +36,7 @@ function MovieDetail() {
       const dataSimilarMovie = await listService.similar(genre, id, 'vi-VN', '1');
       setVideos(dataVideos.videos.results);
       setMovie(data);
-      setVideoSimilar(dataSimilarMovie);
+      setVideoSimilar(dataSimilarMovie.results);
       setLoading(false);
       // setVideoKey(dataVideos.videos.results[0].key);
     };
@@ -85,7 +87,6 @@ function MovieDetail() {
   const handleCloseTrailer = () => {
     setOpenTrailer(false);
   };
-  console.log(videoSimilar);
   return (
     <>
       {loading ? (
@@ -124,10 +125,12 @@ function MovieDetail() {
                 </span>
                 <div className="flex items-center justify-between mb-14">
                   <div className="flex gap-3">
-                    <Link className=" flex items-center py-[7px] px-4 bg-[#485fc7] gap-3 rounded hover:bg-[#062093]">
-                      <Icon_FB className="w-5 h-5" />
-                      <p>Chia sẻ</p>
-                    </Link>
+                    <MovieShare movieUrl={movieUrl}>
+                      <Link className=" flex items-center py-[7px] px-4 bg-[#485fc7] gap-3 rounded hover:bg-[#062093]">
+                        <Icon_FB className="w-5 h-5" />
+                        <p>Chia sẻ</p>
+                      </Link>
+                    </MovieShare>
                     <Link className=" flex items-center py-[7px] px-4 text-[#485fc7] bg-transparent gap-3 rounded border border-[#485fc7] hover:text-white hover:bg-[#485fc7]">
                       <AiOutlinePlus />
                       <p>Bộ sưu tập</p>
