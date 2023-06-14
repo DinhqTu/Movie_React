@@ -8,5 +8,5 @@ export const search = async (query, language, page) => {
       page,
     },
   });
-  return res.results;
+  return res;
 };

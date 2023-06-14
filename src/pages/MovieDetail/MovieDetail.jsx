@@ -99,14 +99,17 @@ function MovieDetail() {
               backgroundImage: `url("https://image.tmdb.org/t/p/original/${movie.backdrop_path}")`,
             }}
           ></div>
-          <section className="mt-[-320px] max-w-[1344px] m-auto ">
+          <section className="mt-[-420px] max-w-[1344px] m-auto ">
             <div className="flex">
               <div className="w-1/4 pr-12 py-7 flex-none">
                 <img
                   src={`https://image.tmdb.org/t/p/w342/${poster_path}`}
                   alt={original_title || movie.name}
                 />
-                <Link className="bg-[#dd003f] flex items-center justify-center text-white mt-6  px-5 py-[9px] rounded text-xl hover:bg-[#fcbcce]">
+                <Link
+                  to={`/watch/${genre}/${id}`}
+                  className="bg-[#dd003f] flex items-center justify-center text-white mt-6  px-5 py-[9px] rounded text-xl hover:bg-[#fcbcce]"
+                >
                   <FaPlay />
                   <h3 className="uppercase ml-4">Xem phim</h3>
                 </Link>

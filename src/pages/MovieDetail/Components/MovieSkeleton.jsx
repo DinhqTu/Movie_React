@@ -6,7 +6,7 @@ function MovieSkeleton() {
       <div className="-z-10 bg-cover bg-center h-[600px] relative after:content-[' '] after:absolute after:top-0 after:bottom-0 after:left-0 after:right-0 after:bg-[#020d18bf]">
         <Skeleton height={200} />
       </div>
-      <section className="mt-[-360px] max-w-[1344px] m-auto ">
+      <section className="mt-[-400px] max-w-[1344px] m-auto ">
         <div className="flex">
           <div className="w-1/4 pr-8 py-3 flex-none">
             <a>

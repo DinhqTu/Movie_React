@@ -11,6 +11,7 @@ const routes = {
   signup: '/signup',
   moviedetail: '/movie/:id',
   tvdetail: '/tv/:id',
+  video: '/watch/:type/:id',
 };
 
 export default routes;

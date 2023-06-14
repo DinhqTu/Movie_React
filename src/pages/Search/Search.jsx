@@ -17,15 +17,15 @@ function Search() {
       const data = await services.search(debounce, 'vi-VN', '1');
       const dataDefault = await serviceList.topRated('vi-VN', '1');
       const dataMovie = data?.results.filter((item) => item.media_type === 'movie');
-      const dataTV = data.filter((item) => item.media_type === 'tv');
+      const dataTV = data?.results.filter((item) => item.media_type === 'tv');
 
-      valueSearch ? setMovies(dataMovie.concat(dataTV)) : setMovies(dataDefault);
+      valueSearch ? setMovies(dataMovie.concat(dataTV)) : setMovies(dataDefault.results);
       setLoading(false);
     };
     fetchApi();
   }, [debounce]);
   return (
-    <div className="p-24">
+    <div className="">
       <div className="max-w-[1344px] mx-auto  ">
         <input
           onChange={(e) => setValueSearch(e.target.value)}
