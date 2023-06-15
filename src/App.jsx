@@ -3,7 +3,7 @@ import { Fragment } from 'react';
 import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import { SkeletonTheme } from 'react-loading-skeleton';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { ToastContainer, Slide, toast } from 'react-toastify';
+import { ToastContainer, Slide } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 import 'slick-carousel/slick/slick.css';

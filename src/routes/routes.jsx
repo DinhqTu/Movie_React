@@ -20,7 +20,7 @@ const publicRoutes = [
   { path: config.routes.upcoming, component: MovieUpComing },
   { path: config.routes.moviedetail, component: MovieDetail, layout: LayoutDetail },
   { path: config.routes.collection, component: Collection, layout: HeaderOnly },
-  { path: config.routes.tvdetail, component: MovieDetail, layout: HeaderOnly },
+  { path: config.routes.tvdetail, component: MovieDetail, layout: LayoutDetail },
   { path: config.routes.movie, component: Movie },
   { path: config.routes.series, component: TvSeries },
   { path: config.routes.search, component: Search, layout: HeaderOnly },

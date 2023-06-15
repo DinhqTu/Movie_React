@@ -14,11 +14,13 @@ function SemilarMovie(props) {
         <img
           src={`https://image.tmdb.org/t/p/w342${item.poster_path}`}
           alt={item.title || item.name}
-          className="min-h-[272px] mb-2 border border-transparent hover:border hover:border-[#c75c0a] "
+          className="min-h-[272px] mb-2 border border-transparent duration-300 transition-all hover:border hover:border-[#c75c0a] "
         />
       </Link>
       <Link to={`/${genre}/${pathname}`}>
-        <p className="hover:text-yellow-600">{item.title || item.name}</p>
+        <p className="transition-all duration-300 hover:text-yellow-600">
+          {item.title || item.name}
+        </p>
       </Link>
     </div>
   );

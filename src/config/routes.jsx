@@ -3,7 +3,7 @@ const routes = {
   filmhot: '/filmhot',
   movie: '/movie',
   upcoming: '/upcoming',
-  series: '/series',
+  series: '/tv',
   search: '/search',
   collection: '/collection',
   faq: '/faq',
