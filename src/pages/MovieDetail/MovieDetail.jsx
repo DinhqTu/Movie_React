@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FaPlay } from 'react-icons/fa';
 import { AiOutlinePlus } from 'react-icons/ai';
+import { toast } from 'react-toastify';
 
 import { Icon_Imdb, Icon_FB } from '../../components/Icons/';
 import Actor from './Components/Actor';
@@ -13,6 +14,7 @@ import Trailer from './Components/Trailer';
 import YoutubePlayer from './Components/YoutubePlayer';
 import SemilarMovie from './Components/SimilarMovie';
 import MovieShare from '../../components/MovieShare/MovieShare';
+import { database } from '../../firebase';
 
 function MovieDetail() {
   const [movie, setMovie] = useState([]);
@@ -87,6 +89,49 @@ function MovieDetail() {
   const handleCloseTrailer = () => {
     setOpenTrailer(false);
   };
+
+  // xử lý việc thêm phim vào bộ sưu tập
+  const handleAddCollection = async () => {
+    const isAuth = JSON.parse(localStorage.getItem('accessToken'));
+    if (!isAuth) {
+      toast.warning('Bạn cần phải đăng nhập trước khi thêm phim vào bộ sưu tập !', {
+        autoClose: 2000,
+      });
+    } else {
+      // get id movie trong db
+      const collection = [];
+      await database
+        .ref(`collection/${isAuth}`)
+        .once('value')
+        .then((snap) => {
+          snap.forEach((value) => {
+            const childData = value.val();
+            collection.push(childData.id);
+          });
+        });
+
+      // ktra xem đã tồn tại hay chưa ? thêm vào bộ sưu tập : hiện thông báo
+      const isMovieExist = collection.some((item) => item === id);
+      if (isMovieExist) {
+        toast.warning('Phim đã có trong bộ sưu tập!', {
+          autoClose: 2000,
+        });
+      } else {
+        const promise = [
+          database.ref(`collection/${isAuth}`).push().set({
+            id: id,
+            type: genre,
+          }),
+        ];
+
+        await Promise.all(promise);
+        toast.success('Thêm vào bộ sưu tập thành công!', {
+          autoClose: 2000,
+        });
+      }
+    }
+  };
+
   return (
     <>
       {loading ? (
@@ -134,7 +179,10 @@ function MovieDetail() {
                         <p>Chia sẻ</p>
                       </Link>
                     </MovieShare>
-                    <Link className=" flex items-center py-[7px] px-4 text-[#485fc7] bg-transparent gap-3 rounded border border-[#485fc7] hover:text-white hover:bg-[#485fc7]">
+                    <Link
+                      onClick={handleAddCollection}
+                      className=" flex items-center py-[7px] px-4 text-[#485fc7] bg-transparent gap-3 rounded border border-[#485fc7] hover:text-white hover:bg-[#485fc7]"
+                    >
                       <AiOutlinePlus />
                       <p>Bộ sưu tập</p>
                     </Link>

@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 
 import { Link } from 'react-router-dom';
-function MovieCard({ image, nameEn, nameVi, path, genre }) {
+function MovieCard(props) {
+  const { image, nameEn, nameVi, path, genre } = props;
   const pathname = nameEn.toLowerCase().split(' ').join('-').replace(/:/g, '') + '~' + path;
   return (
     <div className="py-3 group">

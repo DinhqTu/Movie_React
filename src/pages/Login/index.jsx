@@ -31,6 +31,7 @@ function Login() {
       const snapshot = await database.ref(`users/${user.uid}`).once('value');
       const userData = snapshot.val();
       localStorage.setItem('username', JSON.stringify(userData.name));
+      localStorage.setItem('accessToken', JSON.stringify(user.uid));
 
       // remember user
       if (rememberMe === true) {

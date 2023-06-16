@@ -43,6 +43,7 @@ function WrapperUser() {
     try {
       await auth.signOut();
       localStorage.removeItem('username');
+      localStorage.removeItem('accessToken');
       navigate(config.routes.login);
       toast.success('Đăng xuất thành công !', {
         autoClose: 2000,

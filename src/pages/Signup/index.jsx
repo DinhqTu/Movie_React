@@ -18,7 +18,6 @@ function Signup() {
       if (password === passwordConfirm) {
         const useCredential = await auth.createUserWithEmailAndPassword(email, password);
         const { user } = useCredential;
-        console.log(user);
         // lưu thông tin người dùng vào database
         await database.ref(`users/${user.uid}`).set({
           email: user.email,

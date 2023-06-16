@@ -34,7 +34,7 @@ function Authentication() {
               <FiChevronDown />
             </span>
           </span>
-          {open ? <WrapperUser /> : <></>}
+          {open ? <WrapperUser /> : null}
         </div>
       ) : (
         <div className="px-3 py-2">
