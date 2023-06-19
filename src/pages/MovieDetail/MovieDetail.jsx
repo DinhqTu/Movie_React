@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FaPlay } from 'react-icons/fa';
 import { AiOutlinePlus } from 'react-icons/ai';
+import { BsCheckLg } from 'react-icons/bs';
 import { toast } from 'react-toastify';
 
 import { Icon_Imdb, Icon_FB } from '../../components/Icons/';
@@ -23,12 +24,15 @@ function MovieDetail() {
   const [videoKey, setVideoKey] = useState('');
   const [loading, setLoading] = useState(true);
   const [openTrailer, setOpenTrailer] = useState(false);
+  const [collection, setCollection] = useState(false);
+  const [refresh, setRefresh] = useState(false);
   const location = useLocation();
   const path = location.pathname;
   const genre = path.split('/')[1];
   const id = path.split('~')[1];
   const releaseYear = movie.release_date?.split('-')[0] || movie.first_air_date?.split('-')[0];
   const movieUrl = `https://www.themoviedb.org/${genre}/${id}`;
+  const isAuth = JSON.parse(localStorage.getItem('accessToken'));
 
   useEffect(() => {
     setLoading(true);
@@ -40,10 +44,28 @@ function MovieDetail() {
       setMovie(data);
       setVideoSimilar(dataSimilarMovie.results);
       setLoading(false);
-      // setVideoKey(dataVideos.videos.results[0].key);
     };
+
     fetchApi();
   }, [id]);
+  useEffect(() => {
+    // lấy id phim trong collection
+    const handleCollection = async () => {
+      const collection = [];
+      await database
+        .ref(`collection/${isAuth}`)
+        .once('value')
+        .then((snapshot) => {
+          snapshot.forEach((value) => {
+            const childData = value.val();
+            collection.push(childData.id);
+          });
+        });
+
+      setCollection(collection.some((item) => item == id));
+    };
+    handleCollection();
+  }, [refresh]);
   const {
     credits,
     runtime,
@@ -130,6 +152,7 @@ function MovieDetail() {
         });
       }
     }
+    setRefresh(true);
   };
 
   return (
@@ -179,13 +202,24 @@ function MovieDetail() {
                         <p>Chia sẻ</p>
                       </Link>
                     </MovieShare>
-                    <Link
-                      onClick={handleAddCollection}
-                      className=" flex items-center py-[7px] px-4 text-[#485fc7] bg-transparent gap-3 rounded border border-[#485fc7] hover:text-white hover:bg-[#485fc7]"
-                    >
-                      <AiOutlinePlus />
-                      <p>Bộ sưu tập</p>
-                    </Link>
+
+                    {!collection ? (
+                      <Link
+                        onClick={handleAddCollection}
+                        className=" flex items-center py-[7px] px-4 text-[#485fc7] bg-transparent gap-3 rounded border border-[#485fc7] hover:text-white hover:bg-[#485fc7]"
+                      >
+                        <AiOutlinePlus />
+                        <p>Bộ sưu tập</p>
+                      </Link>
+                    ) : (
+                      <Link
+                        onClick={handleAddCollection}
+                        className=" flex items-center py-[7px] px-4 text-white bg-[#485fc7] gap-3 rounded border border-[#485fc7] "
+                      >
+                        <BsCheckLg />
+                        <p>Bộ sưu tập</p>
+                      </Link>
+                    )}
                   </div>
                   <div>
                     {genres?.map((genre) => (
