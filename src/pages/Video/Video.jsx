@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import Comment from '../../components/Comment';
 
 import * as services from '../../services/movieDetailService';
 function Video() {
@@ -30,12 +31,13 @@ function Video() {
           allowFullScreen
         ></iframe>
       </section>
-      <div>
+      <div className="mb-16">
         <h2 className="text-4xl mt-10 mb-2">{movie.title || movie.original_name}</h2>
         <h3 className="text-xl text-[#c5c0c0]">
           {movie.original_title || movie.name} (<span className="text-cyan-600">{releaseYear}</span>)
         </h3>
       </div>
+      <Comment genre={genre} idMovie={idMovie} />
     </div>
   );
 }

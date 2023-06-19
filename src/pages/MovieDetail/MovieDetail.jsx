@@ -183,7 +183,7 @@ function MovieDetail() {
                 </Link>
               </div>
               <div className="px-8 py-3 pt-[1.8em] mb-8 shrink grow relative">
-                <h2 className="text-[40px] mb-7 font-Merriweather">
+                <h2 className="text-[40px] leading-[48px] mb-7 font-Merriweather">
                   {original_title || movie.original_name}
                 </h2>
                 <h3 className="text-2xl mt-[-20px] mb-9">
