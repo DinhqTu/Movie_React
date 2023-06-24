@@ -63,7 +63,9 @@ function Discover() {
           ))
         )}
       </section>
-      <Pagination pageSize={pageSize} currentPage={currentPage} handle={handleCurrentPage} />
+      {pageSize > 1 ? (
+        <Pagination pageSize={pageSize} currentPage={currentPage} handle={handleCurrentPage} />
+      ) : null}
     </div>
   );
 }

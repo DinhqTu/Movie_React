@@ -7,10 +7,10 @@ function Footer() {
     <div className="text-white px-6 pt-12 pb-24 bg-[url('https://xemphim.fun/static/skin/footer-bg.jpg')]">
       <div className="max-w-[1344px] mx-auto">
         <h3>
-          Phim chất lượng cao online của
+          Phim chất lượng cao online của{' '}
           <a href="/" className="text-[#42779A] hover:text-[#C4C628] font-medium">
             XemPhim
-          </a>
+          </a>{' '}
           khác gì so với các trang phim khác?
         </h3>
         <ul className="m-8 text-sm text-[#b5b5b5] list-disc">

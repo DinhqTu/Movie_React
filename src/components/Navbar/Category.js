@@ -154,7 +154,7 @@ export const category = [
         value: '2022',
       },
       {
-        name: '2022',
+        name: '2021',
         value: '2021',
       },
       {

@@ -83,3 +83,12 @@ export const discover = async (
   });
   return res;
 };
+
+export const trending = async (time, language = 'vi-VN') => {
+  const res = await request.get(`trending/movie/${time}`, {
+    params: {
+      language,
+    },
+  });
+  return res;
+};
