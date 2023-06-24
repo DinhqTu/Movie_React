@@ -59,3 +59,27 @@ export const upcoming = async (language, page = '1') => {
   });
   return res;
 };
+
+export const discover = async (
+  type,
+  with_genres,
+  with_original_language,
+  primary_release_year,
+  with_runtime_lte,
+  sort_by = 'popularity.desc',
+  language = 'vi-VN',
+  page = '1',
+) => {
+  const res = await request.get(`discover/${type}`, {
+    params: {
+      with_genres,
+      with_original_language,
+      primary_release_year,
+      'with_runtime.lte': with_runtime_lte,
+      sort_by,
+      language,
+      page,
+    },
+  });
+  return res;
+};

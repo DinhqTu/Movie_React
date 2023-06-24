@@ -12,6 +12,7 @@ const routes = {
   moviedetail: '/movie/:id',
   tvdetail: '/tv/:id',
   video: '/watch/:type/:id',
+  discover: '/discover',
 };
 
 export default routes;

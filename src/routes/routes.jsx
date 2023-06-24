@@ -13,6 +13,7 @@ import Signup from '../pages/Signup';
 import MovieDetail from '../pages/MovieDetail';
 import Collection from '../pages/Collection';
 import Video from '../pages/Video/Video';
+import Discover from '../pages/Discover/Discover';
 
 const publicRoutes = [
   { path: config.routes.home, component: Home },
@@ -28,6 +29,7 @@ const publicRoutes = [
   { path: config.routes.login, component: Login, layout: null },
   { path: config.routes.signup, component: Signup, layout: null },
   { path: config.routes.video, component: Video, layout: HeaderOnly },
+  { path: config.routes.discover, component: Discover },
 ];
 
 const privateRoutes = [];
