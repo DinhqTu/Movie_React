@@ -44,8 +44,6 @@ function FilmHot() {
           </button>
         )}
       </div>
-
-      {/* <h2 className="absolute mt-[-128px]">Phim lẻ</h2> */}
       <div className="grid grid-cols-5 gap-4">
         {loading ? (
           <MovieCardSkeleton cards={20} />

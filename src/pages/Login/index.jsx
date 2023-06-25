@@ -3,13 +3,19 @@ import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { auth, database } from '../../firebase';
+import firebase from '../../firebase';
 import config from '../../config';
+import Forgot from './Forgot';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate('');
+  const provider = new firebase.auth.GoogleAuthProvider();
+  provider.setCustomParameters({
+    login_hint: 'user@example.com',
+  });
 
   useEffect(() => {
     const emailUser = localStorage.getItem('email');
@@ -52,9 +58,48 @@ function Login() {
     }
   };
 
+  const handleLoginWithGoogle = async (e) => {
+    e.preventDefault();
+    try {
+      const result = await auth.signInWithPopup(provider);
+      const user = result.user;
+      localStorage.setItem('username', JSON.stringify(user.displayName));
+      localStorage.setItem('accessToken', JSON.stringify(user.uid));
+
+      // xoá remember me
+      setRememberMe(localStorage.setItem('remember', 'false'));
+      localStorage.removeItem('email');
+      localStorage.removeItem('password');
+      // chuyển trang sau khi đăng nhập thành công
+      navigate('/');
+      toast.success('Đăng nhập thành công !', {
+        autoClose: 2000,
+      });
+    } catch (error) {
+      toast.error('Tài khoản hoặc mật khẩu không chính xác !', {
+        autoClose: 2000,
+      });
+    }
+  };
+
   const handleEventChangeCheckedBox = (e) => {
     setRememberMe(e.target.checked);
     localStorage.setItem('remember', e.target.checked);
+  };
+
+  const handleResetPassword = (email) => {
+    auth
+      .sendPasswordResetEmail(email)
+      .then(() => {
+        toast.success('Kiểm tra hộp thư email để thay đổi mật khẩu !', {
+          autoClose: 2000,
+        });
+      })
+      .catch((error) => {
+        toast.error(error.message, {
+          autoClose: 2000,
+        });
+      });
   };
 
   return (
@@ -108,15 +153,18 @@ function Login() {
               <button
                 className="block w-full bg-[#cf2122] text-white px-[24px] h-[60px] text-2xl rounded hover:bg-[#c41f20]"
                 type="submit"
+                onClick={handleLoginWithGoogle}
               >
                 Đăng nhập với Google
               </button>
             </div>
-            <div className="text-[#428bca] float-right">
+            <div className="flex text-[#428bca] float-right">
               <Link to={config.routes.signup} className="hover:text-[#dcf836] ">
                 Đăng ký
               </Link>
-              <Link className="ml-[22px] hover:text-[#dcf836]">Quên mật khẩu</Link>
+              <Link className="ml-[22px] hover:text-[#dcf836]">
+                <Forgot keepMounted handleResetPassword={handleResetPassword} />
+              </Link>
               <Link to={config.routes.home} className="hover:text-[#dcf836] ml-[22px]">
                 Trang chủ
               </Link>
